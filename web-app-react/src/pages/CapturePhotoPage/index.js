@@ -10,7 +10,7 @@ const CapturePhoto = () => {
         const imageSrc = webcamRef.current.getScreenshot();
         const formData = new FormData();
         formData.append('image', dataURItoBlob(imageSrc));
-        const response = await axios.post('http://localhost:3000/upload-image/', formData);
+        const response = await axios.post('http://localhost:3000/upload-image', formData);
         console.log(response.data);
     };
 

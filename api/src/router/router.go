@@ -10,6 +10,7 @@ import (
 
 func Router() *mux.Router {
 	r := mux.NewRouter()
+	r.Use(mux.CORSMethodMiddleware(r))
 
 	r = routes.Config(r)
 
@@ -17,8 +18,8 @@ func Router() *mux.Router {
 		w.Write([]byte("Servidor rodando com sucesso"))
 	}).Methods(http.MethodGet)
 
-	r.HandleFunc("/upload-image", controller.UploadImage).Methods(http.MethodPost)
-	r.HandleFunc("/upload-user-image", controller.UploadUserImage).Methods(http.MethodPost)
+	r.HandleFunc("/upload-image", controller.UploadImage).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/upload-user-image", controller.UploadUserImage).Methods(http.MethodPost, http.MethodOptions)
 
 	return r
 }

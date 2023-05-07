@@ -18,7 +18,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		response.Error(w, http.StatusUnprocessableEntity, err)
 	}
-
 	var user models.User
 
 	err = json.Unmarshal(body, &user)
