@@ -14,7 +14,7 @@ const RegisterPage = () => {
     try {
     const formData = new FormData();
     const photoData = new FormData();
-  
+
     formData.append('name', data.name);
     formData.append('ra', data.ra);
     formData.append('image_public_id', `./src/img/${photo.name}`);
@@ -22,8 +22,8 @@ const RegisterPage = () => {
 
     console.log("@>>>", data, formData, photo, photoData);
 
-    const response = await axios.post('http://localhost:3000/usuarios', formData);
-    const photoresp = await axios.post('http://localhost:3000/upload-user-image/', photoData);
+    const response = await axios.post('http://localhost:3000/usuarios', { ...data, image_public_id: `./src/img/${photo.name}` });
+    const photoresp = await axios.post('http://localhost:3000/upload-user-image', photoData);
 
     console.log(response, photoresp);
     console.log("Registrado com sucesso!");
@@ -50,13 +50,13 @@ const RegisterPage = () => {
         <input type="text" id="name" {...register("name", { required: true })} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         {errors.name && <span className="text-red-500">Este campo é obrigatório</span>}
       </div>
-      
+
       <div className="mb-4">
         <label htmlFor="ra" className="block text-gray-700 font-bold mb-2">R.A.:</label>
         <input type="text" id="ra" {...register("ra", { required: true })} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         {errors.birthdate && <span className="text-red-500">Este campo é obrigatório</span>}
       </div>
-      
+
       <div className="mb-4">
         <label htmlFor="photo" className="block text-gray-700 font-bold mb-2">Foto:</label>
         {photo ? (

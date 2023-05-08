@@ -18,7 +18,6 @@ func UploadImage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pathName, err := os.Create("./src/face-recogtion-service/img/" + header.Filename)
-
 	if err != nil {
 		response.Error(w, http.StatusBadRequest, err)
 		return

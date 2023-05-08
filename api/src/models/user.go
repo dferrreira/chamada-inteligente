@@ -1,6 +1,8 @@
 package models
 
-import "errors"
+import (
+	"errors"
+)
 
 type User struct {
 	ID            uint64 `json:"id,omitempty"`
