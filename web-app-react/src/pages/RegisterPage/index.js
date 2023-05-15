@@ -12,27 +12,31 @@ const RegisterPage = () => {
 
   const onSubmit = async (data) => {
     try {
-    const formData = new FormData();
-    const photoData = new FormData();
+      const formData = new FormData();
+      const alunoNome = data.name.replaceAll(' ', '_');
+      const photoData = new FormData();
+      
+      formData.append('name', data.name);
+      formData.append('ra', data.ra);
+      formData.append('image_public_id', `./src/img/${alunoNome}.jpg`);
+      photoData.append('image', photo, `${alunoNome}.jpg`);
 
-    formData.append('name', data.name);
-    formData.append('ra', data.ra);
-    formData.append('image_public_id', `./src/img/${photo.name}`);
-    photoData.append('image', photo);
+      console.log("@>>>", data, formData, photo, photoData);
 
-    console.log("@>>>", data, formData, photo, photoData);
+      const response = await axios.post('http://localhost:3000/usuarios', { ...data, image_public_id: `./src/img/${alunoNome}.jpg` });
+      const photoresp = await axios.post('http://localhost:3000/upload-user-image', photoData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-    const response = await axios.post('http://localhost:3000/usuarios', { ...data, image_public_id: `./src/img/${photo.name}` });
-    const photoresp = await axios.post('http://localhost:3000/upload-user-image', photoData);
-
-    console.log(response, photoresp);
-    console.log("Registrado com sucesso!");
-    reset();
-    } catch(e) {
+      console.log(response, photoresp);
+      console.log("Registrado com sucesso!");
+      reset();
+    } catch (e) {
       alert('Falha ao registrar');
       throw new Error("Algo falhou" + e);
     }
-
   };
 
   const handleCapture = () => {
